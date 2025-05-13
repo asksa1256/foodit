@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getFoods } from "../api";
-import FoodList from "./FoodList";
-import FoodForm from "./FoodForm";
+import { getFoods } from "./api";
+import FoodList from "./components/FoodList";
+import FoodForm from "./components/FoodForm";
 
 function App() {
   const [order, setOrder] = useState("createdAt");
