@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { getFoods } from "./api";
-import FoodList from "./components/FoodList";
-import FoodForm from "./components/FoodForm";
+import { createFood } from "./api";
+import FoodList from "./FoodList";
+import FoodForm from "./FoodForm";
 
 function App() {
   const [order, setOrder] = useState("createdAt");
@@ -25,7 +25,7 @@ function App() {
     try {
       setLoadingError(null);
       setIsLoading(true);
-      result = await getFoods(options);
+      result = await createFood(options);
     } catch (error) {
       setLoadingError(error);
       return;
@@ -57,6 +57,10 @@ function App() {
     setSearch(e.target["search"].value);
   };
 
+  const handleSubmitSuccess = (newItem) => {
+    setItems((prevItems) => [newItem, ...prevItems]);
+  };
+
   const sortedItems = items.sort((a, b) => b[order] - a[order]);
 
   useEffect(() => {
@@ -68,7 +72,7 @@ function App() {
 
   return (
     <div>
-      <FoodForm />
+      <FoodForm onSubmitSuccess={handleSubmitSuccess} />
       <button onClick={handleNewestClick}>최신순</button>
       <button onClick={handleCalorieClick}>칼로리순</button>
       <form onSubmit={handleSearchSubmit}>
